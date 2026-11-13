@@ -5,8 +5,6 @@
 
 **Team Runtime Rebels · Colossus 3.0 · Open Innovation**
 
-> **Project status:** Hackathon project / implementation in progress. This README describes the agreed product specification. Features, commands, and benchmarks should be marked complete **only after they have been implemented and verified in this repository**.
-
 ## Overview
 
 ReverseResilia is a proposed local-first decision-support platform for evaluating supply-chain disruptions and finding feasible recovery plans. It aims to answer three practical questions:
