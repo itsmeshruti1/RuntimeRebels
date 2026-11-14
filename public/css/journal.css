@@ -1,0 +1,149 @@
+/* Journal Publication Styling in Herasymenko Design System */
+
+.j-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--green);
+  background: var(--black);
+  padding: calc(100 * var(--px)) calc(32 * var(--px)) calc(120 * var(--px));
+  box-sizing: border-box;
+}
+
+.j-header {
+  margin-bottom: calc(64 * var(--px));
+  max-width: calc(1100 * var(--px));
+}
+
+.j-kicker {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: calc(16 * var(--px));
+}
+
+.j-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, calc(56 * var(--px)), 72px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: calc(20 * var(--px));
+}
+
+.j-subtitle {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-size: calc(20 * var(--px));
+  opacity: 0.8;
+  max-width: calc(720 * var(--px));
+  line-height: 1.3;
+}
+
+.j-articles {
+  display: flex;
+  flex-direction: column;
+  gap: calc(64 * var(--px));
+  border-top: 1px solid var(--green-12);
+  padding-top: calc(48 * var(--px));
+}
+
+.j-article-card {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: calc(48 * var(--px));
+  align-items: center;
+  border-bottom: 1px solid var(--green-12);
+  padding-bottom: calc(64 * var(--px));
+}
+
+.j-article-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(3 * var(--px));
+  background: rgba(206, 228, 159, 0.05);
+  max-height: calc(440 * var(--px));
+}
+
+.j-article-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.j-article-card:hover .j-article-img-wrap img {
+  transform: scale(1.04);
+}
+
+.j-article-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: calc(16 * var(--px));
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+.j-article-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, calc(36 * var(--px)), 48px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: calc(20 * var(--px));
+}
+
+.j-article-excerpt {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-size: calc(15 * var(--px));
+  line-height: 1.45;
+  opacity: 0.85;
+  margin-bottom: calc(24 * var(--px));
+}
+
+.j-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(6 * var(--px));
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  text-transform: uppercase;
+  color: var(--green);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--green-12);
+  padding: calc(6 * var(--px)) calc(14 * var(--px));
+  border-radius: calc(2 * var(--px));
+  transition: all 0.2s;
+}
+
+.j-read-more:hover {
+  background: var(--green);
+  color: var(--black);
+}
+
+.j-full-content {
+  display: none;
+  margin-top: calc(24 * var(--px));
+  padding-top: calc(20 * var(--px));
+  border-top: 1px dashed var(--green-12);
+  font-size: calc(14 * var(--px));
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.j-article-card.is-expanded .j-full-content {
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .j-article-card {
+    grid-template-columns: 1fr;
+    gap: calc(24 * var(--px));
+  }
+}

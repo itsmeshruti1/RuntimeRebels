@@ -1,0 +1,465 @@
+@import "tailwindcss";
+
+:root {
+  /* Typography */
+  --font-sans: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'PP Neue Montreal Mono', monospace;
+  --font-serif: 'FH Phemister', Georgia, serif;
+
+  /* Brand Palette */
+  --green: #cee49f;
+  --green-12: rgba(206, 228, 159, 0.12);
+  --green-20: rgba(206, 228, 159, 0.20);
+  --color-accent: #cee49f;
+  --color-accent-subtle: rgba(206, 228, 159, 0.14);
+  --color-accent-hover: #b8d485;
+
+  /* Surfaces */
+  --color-bg: #F5F4F0;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F9F9F7;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-dark: #0D0D0D;
+
+  /* Typography / Text colors */
+  --color-text-primary: #0D0D0D;
+  --color-text-secondary: #5A5852;
+  --color-text-muted: #8C887E;
+  --color-text-inverse: #F5F4F0;
+
+  /* Borders & Dividers */
+  --color-border: rgba(13, 13, 13, 0.12);
+  --color-border-subtle: rgba(13, 13, 13, 0.08);
+  --color-border-strong: rgba(13, 13, 13, 0.24);
+
+  /* Semantic Alerts */
+  --color-danger: #8E2A1E;
+  --color-danger-bg: #FDF2F0;
+  --color-danger-border: rgba(142, 42, 30, 0.25);
+
+  --color-warning: #946800;
+  --color-warning-bg: #FEF9EC;
+  --color-warning-border: rgba(148, 104, 0, 0.25);
+
+  --color-success: #1E6641;
+  --color-success-bg: #F0F8F3;
+  --color-success-border: rgba(30, 102, 65, 0.25);
+
+  /* Border Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-pill: 9999px;
+
+  /* Motion */
+  --motion-duration-fast: 150ms;
+  --motion-duration-standard: 220ms;
+  --motion-duration-slow: 350ms;
+  --motion-ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.is-home {
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
+  position: static !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  background: #F5F4F0;
+  color: #0D0D0D;
+}
+
+html.is-home body {
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  position: static !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  background: #F5F4F0;
+  color: #0D0D0D;
+}
+
+html.is-landing,
+html.is-landing body {
+  overflow: hidden !important;
+  height: 100% !important;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+html.is-home [data-landing-root],
+html.is-home .load,
+html.is-home [data-load],
+html.is-home .work {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Custom Cursor Animation — Inspired by GSAP Topic #36296 */
+.cursor-example {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  background-color: var(--green);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: left, top, transform, opacity;
+  box-shadow: 0 0 16px rgba(206, 228, 159, 0.45);
+  transform-origin: center center;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cursor-example.is-hovering {
+  transform: scale(1.6);
+  background-color: rgba(206, 228, 159, 0.15);
+  border: 1.5px solid var(--green);
+  box-shadow: 0 0 24px rgba(206, 228, 159, 0.7);
+}
+
+.cursor-example.is-clicking,
+.cursor-example.is-hovering.is-clicking {
+  transform: scale(0.65);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-example {
+    display: none !important;
+  }
+}
+
+html:not(.veil-on) .veil,
+html:not(.veil-on) [data-veil] {
+  pointer-events: none !important;
+}
+
+.font-auren-sans {
+  font-family: var(--font-sans);
+}
+
+.font-auren-mono {
+  font-family: var(--font-mono);
+}
+
+.font-auren-serif {
+  font-family: var(--font-serif);
+}
+
+/* Case drawer button & landing prompt pill */
+.landing-action-bar {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  max-width: calc(100vw - 32px);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .landing-action-bar {
+    bottom: calc(58 * var(--px, 1px));
+  }
+}
+
+.landing-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-pill-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-1px);
+}
+
+/* Auren Showcase Cards & Hover Transitions */
+.auren-card-zoom {
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auren-card-zoom:hover {
+  transform: scale(1.022);
+}
+
+.auren-btn-pill {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auren-btn-pill:hover {
+  transform: translateY(-1px);
+}
+
+/* Custom subtle scrollbars for data tables */
+.rr-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.rr-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+}
+.rr-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
+}
+
+/* Scoped workbench update utility classes — unified with landing design language */
+#reverseresilia-workbench .rr-notice {
+  margin-top: 12px;
+  font-size: 12px;
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  color: var(--color-warning);
+  border-radius: var(--radius-xs);
+}
+
+#reverseresilia-workbench .rr-budget {
+  display: flex;
+  align-items: center;
+  gap: 16px 36px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  margin-top: 20px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid #0D0D0D;
+  border-radius: var(--radius-xs);
+}
+
+#reverseresilia-workbench .rr-budget strong {
+  font-size: 13px;
+  color: var(--color-text-primary);
+}
+
+#reverseresilia-workbench .rr-budget p {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+#reverseresilia-workbench .rr-budget label {
+  margin-left: auto;
+  display: grid;
+  gap: 3px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+#reverseresilia-workbench .rr-budget select {
+  padding: 5px 8px;
+  border: 1px solid rgba(13, 13, 13, 0.2);
+  background: #ffffff;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+#reverseresilia-workbench .rr-disclosure {
+  border-block-start: 1px solid var(--color-border);
+  padding-top: 12px;
+  margin-top: 15px;
+}
+
+#reverseresilia-workbench .rr-panel-disclosure {
+  border: 1px solid var(--color-border);
+  padding: 17px 20px;
+  background: #ffffff;
+  border-radius: var(--radius-xs);
+}
+
+#reverseresilia-workbench .rr-disclosure > summary,
+#reverseresilia-workbench .rr-panel-disclosure > summary {
+  cursor: pointer;
+  font: 600 13px/1.5 var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+#reverseresilia-workbench .rr-panel-disclosure small {
+  font: 11px var(--font-mono);
+  color: var(--color-text-secondary);
+  margin-left: 8px;
+}
+
+#reverseresilia-workbench :is(button, summary, select, a, input):focus-visible {
+  outline: 2px solid #0D0D0D;
+  outline-offset: 2px;
+}
+
+#reverseresilia-workbench .rr-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#reverseresilia-workbench .rr-tools select,
+#reverseresilia-workbench .rr-actions summary {
+  padding: 7px 11px;
+  border: 1px solid rgba(13, 13, 13, 0.2);
+  background: #ffffff;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+}
+
+#reverseresilia-workbench .rr-city {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+#reverseresilia-workbench .rr-city span {
+  color: var(--color-text-secondary);
+}
+
+#reverseresilia-workbench .rr-actions {
+  position: relative;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+#reverseresilia-workbench .rr-actions summary {
+  display: block;
+}
+
+#reverseresilia-workbench .rr-actions summary::after {
+  content: ' ⌄';
+  margin-left: 8px;
+}
+
+#reverseresilia-workbench .rr-actions > div {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: max-content;
+  background: #ffffff;
+  border: 1px solid rgba(13, 13, 13, 0.2);
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-xs);
+  z-index: 10;
+}
+
+#reverseresilia-workbench .rr-actions button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-primary);
+  transition: background-color 150ms ease;
+}
+
+#reverseresilia-workbench .rr-actions button:hover {
+  background: #F5F4F0;
+}
+
+@media (max-width: 720px) {
+  #reverseresilia-workbench .rr-budget {
+    gap: 10px 24px;
+  }
+  #reverseresilia-workbench .rr-budget label {
+    margin-left: 0;
+  }
+  #reverseresilia-workbench .rr-tools {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* Feature pages share the landing masthead's ink, type and accent. */
+#reverseresilia-workbench {
+  background: #0b0b0b;
+  min-height: calc(100vh - 4rem);
+  padding-top: clamp(2rem, 5vw, 4.5rem);
+}
+.engine-title { text-wrap: balance; }
+.engine-pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid rgb(255 255 255 / .19);
+}
+.engine-pages a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: .55rem .9rem;
+  border: 1px solid rgb(255 255 255 / .25);
+  border-radius: 4px;
+  color: #fafaf7;
+  font: 11px/1.35 var(--font-mono);
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color .22s var(--motion-ease-standard), color .22s var(--motion-ease-standard);
+}
+.engine-pages a:hover { background: #f5f4f0; color: #0b0b0b; }
+.engine-pages a[aria-current] { background: var(--green); border-color: var(--green); color: #0b0b0b; }
+#reverseresilia-workbench .rr-city span { color: #dadcd5; }
+#reverseresilia-workbench .rr-budget { border-left-color: #72864c; }
+#reverseresilia-workbench :focus-visible {
+  outline: 2px solid #101110;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 5px var(--green);
+}
+@keyframes engine-title-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .engine-title { animation: engine-title-in .32s var(--motion-ease-standard) both; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-home-root] *, [data-home-root] *::before, [data-home-root] *::after {
+    transition-duration: 0s !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

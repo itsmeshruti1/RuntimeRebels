@@ -7,225 +7,103 @@
 
 ## Overview
 
-ReverseResilia is a proposed local-first decision-support platform for evaluating supply-chain disruptions and finding feasible recovery plans. It aims to answer three practical questions:
+ReverseResilia models supply-chain disruptions, computes recovery plans against a service target and budget, and independently checks assignments and resource constraints. The application combines a WebGL landing page with a city showcase and five dedicated Engine pages.
 
-1. **What percentage of customer orders can still be delivered on time** using the surviving warehouses and their existing resources?
-2. **What is the lowest modeled cost of reaching a chosen service target**, including 100% when possible?
-3. **Does the proposed plan satisfy inventory, capacity, transport, and delivery constraints?**
+Regional scenarios cover Bengaluru, Mumbai, Delhi NCR, Chennai, and Guwahati. Pan-India Multi-City and a deterministic 10-order benchmark are also available.
 
-A planner selects a regional network, simulates a disruption, reviews affected orders and maximum recoverable service, sets a target and budget, and evaluates an optimized recovery plan. A separate checker then validates the plan under its stated assumptions.
+## Run locally
 
-The project focuses on **Bengaluru, Mumbai, Delhi NCR, Chennai, and Guwahati**, using one common optimization model across five regional datasets.
+Install Node.js 22.12 or newer and Git, then run:
 
-## The problem
-
-A warehouse outage, transport-lane closure, or processing-capacity reduction can put customer deliveries at risk. Even when other warehouses have spare inventory, a recovery plan must still respect order demand, available handling capacity, transport eligibility, deadlines, and costs.
-
-Businesses need more than a map of disruptions: they need to understand **how much service is recoverable**, **what extra resources would cost**, and **which proposals are actually feasible**.
-
-## Proposed workflow
-
-```text
-Select city
-   ↓
-Inspect or edit the supply network
-   ↓
-Simulate a warehouse outage, lane closure, or capacity reduction
-   ↓
-Measure immediate impact and maximum natural recovery
-   ↓
-Set on-time delivery target, budget, and permitted interventions
-   ↓
-Find a cost-minimized recovery plan (or report infeasibility)
-   ↓
-Independently verify assignments, constraints, and costs
-   ↓
-Compare scenarios and export an action sheet
+```bash
+git clone https://github.com/itsmeshruti1/RuntimeRebels.git
+cd RuntimeRebels
+npm ci
+npm run build
+npm start
 ```
 
-### Core capabilities — agreed MVP scope
+Open http://localhost:3000. Keep the terminal running while using the application.
 
-| Area | Planned functionality |
-| --- | --- |
-| Network setup | Five-city selector; editable warehouses, stock, processing capacity, orders, deadlines, priorities, and transport options |
-| Data quality | Validated bundled JSON; CSV import where feasible; clear missing/invalid/duplicate record errors |
-| Visualization | Interactive regional network view with facilities, customers, links, disruptions, and relevant KPIs |
-| Disruption analysis | Warehouse outages, lane/transport-option closures, processing-capacity reductions, and immediate impact on existing orders |
-| Natural recovery | Maximum on-time service using **existing** resources and a least-cost plan preserving that maximum |
-| Target recovery | User-selected service target (0–100%), budget comparison, priority protection, and cost minimization |
-| Priced interventions | Explicitly modeled emergency-stock, extra-handling, and transport-capacity/eligibility packages |
-| Explainability | Unfulfilled orders, supported constraint explanations, accurate infeasibility and solver-status reporting |
-| Independent verification | Separate checks of assignments, stock, capacity, eligible routes, timing, priorities, interventions, and cost |
-| Decisions and reporting | Baseline vs. disrupted vs. recovered comparison; order-level recovery action sheet and CSV export |
-| Usability | Responsive controls, loading/error states, repeatable runs, and invalidation of stale results |
+On Windows, after installing dependencies and building, double-click **START-LOCAL.cmd** to use http://127.0.0.1:4173 instead. The launcher keeps startup errors visible. Stop the server with Ctrl+C. If a port is occupied, stop its existing server or choose another PORT environment variable before starting.
 
-**Optional after the MVP is stable:** a cost-versus-service curve, a fair greedy-baseline comparison, a PDF verification certificate, and saved scenario replay.
+For live development, run `npm run dev`. The Express server serves the frontend and API together on port 3000.
 
-**Out of scope for the first version:** live GPS, real-time traffic promises, automatic dispatch, detailed multi-stop truck routing, ERP/WMS connectors, supplier-risk graphs, driver apps, and instantaneous intercity fulfillment.
+Only AI-assisted warehouse extraction requires a Gemini API key. Copy `.env.example` to `.env` and set GEMINI_API_KEY to enable that feature. CSV imports and the recovery planner work without an AI key. Keep credentials out of version control.
 
-## How recovery optimization is intended to work
+## Pages and capabilities
 
-ReverseResilia uses a three-stage integer optimization formulation:
-
-- **Stage A — Maximum natural recovery:** maximize fully served, on-time orders using surviving resources **without** emergency packages.
-- **Stage B — Cheapest natural plan:** minimize assignment cost while preserving the proven maximum service from Stage A.
-- **Stage C — Target-based recovery:** minimize modeled assignment and allowed-intervention costs while enforcing the requested service target.
-
-Each order is indivisible in the MVP, with one order per customer. Constraints cover unique assignment, inventory, warehouse processing capacity, available facilities and transport options, modeled delivery deadlines, selected interventions, and mandatory critical-order policies when enabled.
-
-A **100% target is not guaranteed**. If the model cannot achieve it, the application must report the actual solver outcome and supported reasons. A result should be called a **proven minimum** only when the solver establishes optimality; an unproven feasible solution is not the same thing.
-
-**Budget interpretation:** determine the lowest target-compliant cost when possible, then compare that value with the entered budget. Financial shortfall and physical infeasibility are different outcomes.
-
-**Verification:** a separate checker recomputes resource use, assignments, timing, and costs from the validated inputs. Passing the checker verifies the modeled constraints, **not** actual future delivery performance or global optimality.
-
-## Data strategy: real geography, simulated operations
-
-The intended datasets combine real geographic references with transparently simulated logistics operations.
-
-| Input | Intended origin | How it is described |
+| Page | URL | Features |
 | --- | --- | --- |
-| Road segments | OpenStreetMap PBF regional extracts | **Sourced geography** |
-| PIN reference coordinates | Indian PIN-code directory | **Sourced geography** (not verified delivery addresses) |
-| Warehouse and order locations | Simulated entities positioned at valid PIN coordinates | **Simulated operations** |
-| Inventory, handling capacity, demand, deadlines, and INR prices | Editable, deterministically generated test data | **Simulated operations** |
-| Road-network distance | Shortest path through eligible drivable roads | **Derived from sourced geography** |
-| Travel-time estimate | Road distance combined with documented speed/handling assumptions | **Derived + simulated assumptions** |
-| Recovery percentage and plan cost | Current validated input processed by solver | **Computed model result** |
+| Landing | / | WebGL gallery, orbit and slider experiences |
+| Home | /home | Platform introduction and city corridors |
+| Network Overview | /workbench/overview | Editable warehouses, customer orders, maps, network import and scenario management |
+| Disruption Simulator | /workbench/simulator | Warehouse outages, route closures, resource changes and immediate impact |
+| Recovery Planner | /workbench/planner | Service targets, budgets, critical-order protection and permitted interventions |
+| Scenario Comparison | /workbench/comparison | Baseline, disrupted and recovered results |
+| Verified Action Sheet | /workbench/action-sheet | Order-level assignments, independent checks and CSV export |
 
-### Expected local source files
+Add `?city=bengaluru`, `?city=mumbai`, `?city=delhi_ncr`, `?city=chennai`, `?city=guwahati`, `?city=multi_city` or `?city=known_answer` to a feature URL. Feature navigation retains the selected scenario. Local browser storage saves scenarios, and JSON export supports portable copies.
 
-These filenames are specified by the project plan. **Their presence, contents, geographic coverage, and licenses must be verified in the actual workspace** before claiming they were processed.
+## Recovery workflow
 
-```text
-data/raw/
-├── southern-zone-261112.osm.pbf        # Bengaluru / Chennai region
-├── western-zone-261112.osm.pbf         # Mumbai region
-├── northern-zone-261112.osm.pbf        # Delhi NCR region
-├── north-eastern-zone-261112.osm.pbf   # Guwahati region
-└── pincode.csv                         # Indian PIN reference coordinates
-```
+1. Select a city and inspect or edit warehouses, stock, capacity, orders and transport options.
+2. Simulate disruptions and inspect immediate impact.
+3. Review maximum natural recovery using surviving resources.
+4. Set the required service percentage, budget and permitted interventions.
+5. Compare the recovery stages and inspect independent verification.
+6. Export the order-level action sheet or scenario JSON.
 
-Preprocessing should extract relevant city road geometry, retain suitable drivable ways and required nodes, build a directed graph, snap valid PIN reference points, compute **reachable road-network distances**, and cache warehouse-to-order distance matrices. No route should be invented for an unreachable pair. Travel times are estimates from explicit assumptions, **not live traffic observations**.
+The TypeScript engine uses successive shortest-path assignment and branch-and-bound optimization. Stage A maximizes natural recovery, Stage B minimizes its cost, and Stage C searches for a target-compliant recovery plan with eligible interventions. Inventory, processing capacity, route availability, timing and critical-order policies constrain the result.
 
-The four PBF files are large. **Do not commit raw PBFs to GitHub.** Store them outside version control and document how to obtain or supply them. Keep only reasonably sized processed data that can legally be redistributed. Add attribution and review the applicable OSM/other data licenses before publishing extracts or coordinates.
+A separate verifier checks the modeled plan. The interface reports infeasibility, budget shortfalls and stale calculations.
 
-## Planned technology
+## Implementation
 
 | Layer | Technology |
 | --- | --- |
-| Frontend | React, Vite, JavaScript; CSS/Tailwind according to the supplied UI template |
-| Backend | Python, FastAPI, Pydantic |
-| Optimization | Google OR-Tools CP-SAT |
-| Geographic preprocessing | Osmium and a local drivable-road graph / shortest-path implementation |
-| Data storage | Local JSON, optionally SQLite for saved runs |
-| Visualization | Interactive network/map with offline SVG or table fallback |
-| Testing | pytest, API integration tests, frontend build and manual end-to-end checks |
-| Deployment | Localhost; no required paid services |
-
-The visual implementation is intended to follow the supplied UI reference, including observable navigation, scrolling, transitions, hover effects, and responsive behavior, while keeping all controls functional.
-
-## Repository structure (target)
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS |
+| Visuals and interaction | WebGL/Three.js, GSAP, Motion, canvas, Lucide icons |
+| Server | Express, TypeScript through tsx |
+| Recovery | TypeScript solver, browser worker and independent verifier |
+| Persistence | Browser-local scenarios and JSON import/export |
+| Optional extraction | Google Gemini API |
 
 ```text
-reverse-resilia/
-├── frontend/
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── api.js
-│       └── App.jsx
-├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── schemas.py
-│   │   ├── dataset.py
-│   │   ├── disruptions.py
-│   │   ├── solver.py
-│   │   ├── verifier.py
-│   │   └── reporting.py
-│   ├── data/
-│   ├── tests/
-│   └── requirements.txt
-├── data/
-│   └── raw/                    # Not committed to Git
-├── docs/
-│   └── assumptions.md
-└── README.md
+src/
+  components/       Landing, home, Engine views and shared controls
+  data/             Regional scenarios and source-audit metadata
+  engine/           Solver, budget analysis, validation, routes and verifier
+  types/            Recovery data types
+  utils/            Warehouse import utilities
+public/             Fonts, images, WebGL scripts and styles
+tests/browser.cjs   End-to-end browser checks
+server.ts           Express API and frontend server
+START-LOCAL.cmd     Windows launcher on port 4173
 ```
 
-*This is a target layout, not a claim that these directories already exist.*
-
-## Local development (once implementation files exist)
-
-**Prerequisites:** supported Python, Node.js/npm, Git, and Osmium for source-data processing.
-
-Backend, from the repository root:
+## Checks
 
 ```bash
-cd backend
-python -m venv .venv
-# Activate your virtual environment using the command for your OS.
-python -m pip install -r requirements.txt
-python -m uvicorn app.main:app --reload --port 8000
+npm run build
+npm run lint
+node --import tsx --test src/engine/*.test.ts src/utils/*.test.ts
+node tests/browser.cjs --production
 ```
 
-Frontend, in a separate terminal:
+The lint script performs TypeScript checking. Browser checks require Playwright Chromium installed with `npx playwright install chromium`. PLAYWRIGHT_EXECUTABLE_PATH can select an existing compatible browser.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+During development, the build, type check, 38 automated tests, and desktop/mobile browser flow passed. Browser checks covered landing modes, JSON validation, order editing, routes, planning, comparison, audit, CSV export, city switching and feature-page navigation. Later localhost checks were blocked by the execution environment, so startup output alone does not establish browser reachability on another machine.
 
-Typical local endpoints are `http://127.0.0.1:8000/docs` for FastAPI and `http://localhost:5173` for Vite. **These are expected commands/paths only: update them to match the verified repository before claiming the app runs.**
+## Data assumptions and limitations
 
-A correct first run will also require either processed city datasets or a completed preprocessing flow that uses the actual source files.
+Regional scenarios combine geographic references with modeled warehouses, orders, inventory, capacity, deadlines and INR prices. Review the source-audit metadata and route assumptions when interpreting results. PIN reference coordinates do not establish actual customer or facility addresses, and modeled travel times do not represent live traffic.
 
-## Testing and reproducibility
+A verified plan satisfies the implemented model under its inputs and assumptions. Actual delivery outcomes depend on operational conditions. A requested target can be infeasible.
 
-The intended test suite checks:
-
-- A known 10-order fixture: with one failed warehouse, surviving processing capacity permits **8/10 orders (80%)**; two specifically modeled capacity packages can unlock **10/10 (100%)** with **₹800 in package fees**, excluding delivery costs.
-- Warehouse outage, transport closure, reduced stock/capacity, missed deadlines, critical-order policies, and invalid imports.
-- Budget shortfall versus target infeasibility.
-- Actual CP-SAT statuses: `OPTIMAL`, `FEASIBLE`, `INFEASIBLE`, `UNKNOWN`, `MODEL_INVALID`.
-- Rejection of deliberately corrupted plans by an independent verifier.
-- Consistency across five city datasets and recomputation after input edits.
-- UI navigation, scrolling, template-matched interactions, and offline operation.
-
-When the test suite is implemented, run from `backend/`:
-
-```bash
-python -m pytest -q
-```
-
-**No tests or performance results are claimed in this README until run logs exist.** Record actual benchmark data and test outcomes after implementation.
-
-## A planned demo scenario
-
-1. Select **Bengaluru** and inspect the regional network.
-2. Disable a warehouse and view immediately affected customer orders.
-3. Run **maximum existing-resource recovery**; inspect the computed service percentage.
-4. Request **100% service** and allow priced interventions.
-5. Inspect the selected recovery plan or the accurate infeasibility result.
-6. Open the independent verification checks.
-7. Change a warehouse capacity or price and rerun to demonstrate genuine recalculation.
-8. Compare scenarios and export the action sheet.
-
-## Limitations and data integrity
-
-- Geography may be real, but warehouses, customers, stock, demand, prices, and delivery times in the hackathon scenarios are **modeled**, not validated operational records.
-- PIN-code reference points do not establish real facility or customer addresses.
-- Road-network distances depend on extract coverage, graph connectivity, and snapping assumptions.
-- Estimated travel time is not live traffic information.
-- The initial model does not perform full vehicle-route sequencing or instant intercity restocking.
-- A mathematical feasibility check is not a guarantee of real-world delivery.
-- Features listed above are project requirements until completion is verified in the repository.
+Raw geographic extracts and original design reference archives are outside the application source. Installed dependencies, generated builds and environment credentials are excluded from this repository.
 
 ## Team
-
-**Runtime Rebels** — Colossus 3.0, Open Innovation
 
 - Shruti Talikoti
 - Priyesh Raj
@@ -233,8 +111,4 @@ python -m pytest -q
 
 ## Attribution and licensing
 
-The project plans to use openly licensed software such as React, FastAPI, and Google OR-Tools, and may include data derived from OpenStreetMap. Follow each dependency's license, credit OSM contributors where appropriate, and verify redistribution rights for the PIN-code dataset. Do **not** add a project-wide open-source license until the team has selected one.
-
----
-
-**ReverseResilia — Recover to a target. And prove it holds.**
+The project includes third-party libraries, visual assets and fonts from the supplied project. Review their respective licenses before redistribution or commercial use. Attribute OpenStreetMap contributors where OSM-derived data or maps are used. A project-wide license has not been selected by the team.

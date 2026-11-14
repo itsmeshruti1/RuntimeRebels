@@ -1,0 +1,297 @@
+/* Residences Archive & Single View Styling in Herasymenko Design System */
+
+.r-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--green);
+  background: var(--black);
+  padding: calc(100 * var(--px)) calc(32 * var(--px)) calc(120 * var(--px));
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.r-header {
+  margin-bottom: calc(64 * var(--px));
+  max-width: calc(1100 * var(--px));
+}
+
+.r-kicker {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: calc(16 * var(--px));
+}
+
+.r-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, calc(56 * var(--px)), 72px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.r-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * var(--px));
+  margin-bottom: calc(48 * var(--px));
+  border-bottom: 1px solid var(--green-12);
+  padding-bottom: calc(20 * var(--px));
+}
+
+.r-filter-btn {
+  background: var(--green-12);
+  color: var(--green);
+  border: 1px solid transparent;
+  padding: calc(6 * var(--px)) calc(14 * var(--px));
+  border-radius: calc(2 * var(--px));
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(10 * var(--px));
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.r-filter-btn:hover,
+.r-filter-btn.is-active {
+  background: var(--green);
+  color: var(--black);
+}
+
+.r-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.r-item {
+  display: grid;
+  grid-template-columns: calc(60 * var(--px)) 1.5fr 1fr 1fr calc(120 * var(--px));
+  align-items: baseline;
+  padding: calc(28 * var(--px)) 0;
+  border-bottom: 1px solid var(--green-12);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.25s ease, padding 0.25s ease;
+  position: relative;
+}
+
+.r-item:hover {
+  background: rgba(206, 228, 159, 0.03);
+  padding-left: calc(16 * var(--px));
+  padding-right: calc(16 * var(--px));
+}
+
+.r-num {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  opacity: 0.5;
+}
+
+.r-item-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, calc(28 * var(--px)), 36px);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.r-item-type {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(12 * var(--px));
+  opacity: 0.8;
+}
+
+.r-item-meta {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  opacity: 0.6;
+}
+
+.r-item-action {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  text-align: right;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Floating Hover Preview Card */
+.r-preview-box {
+  position: fixed;
+  pointer-events: none;
+  width: calc(320 * var(--px));
+  height: calc(420 * var(--px));
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.25s ease-out;
+  z-index: 150;
+  border-radius: calc(4 * var(--px));
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--green-12);
+}
+
+.r-preview-box.is-active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.r-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Single Residence Deep Dive */
+.res-hero {
+  padding-top: calc(80 * var(--px));
+  margin-bottom: calc(64 * var(--px));
+}
+
+.res-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--green-12);
+  padding-bottom: calc(16 * var(--px));
+  margin-bottom: calc(32 * var(--px));
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(11 * var(--px));
+  letter-spacing: 0.05em;
+}
+
+.res-hero-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: clamp(36px, calc(72 * var(--px)), 100px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: calc(32 * var(--px));
+}
+
+.res-lead {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-size: clamp(16px, calc(24 * var(--px)), 32px);
+  line-height: 1.25;
+  max-width: calc(960 * var(--px));
+  letter-spacing: -0.01em;
+  margin-bottom: calc(48 * var(--px));
+}
+
+.res-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(180 * var(--px)), 1fr));
+  gap: calc(24 * var(--px));
+  border-top: 1px solid var(--green-12);
+  border-bottom: 1px solid var(--green-12);
+  padding: calc(32 * var(--px)) 0;
+  margin-bottom: calc(64 * var(--px));
+}
+
+.res-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * var(--px));
+}
+
+.res-spec-key {
+  font-family: 'PP Neue Montreal Mono', monospace;
+  font-size: calc(10 * var(--px));
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.res-spec-val {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: calc(15 * var(--px));
+  letter-spacing: -0.01em;
+}
+
+.res-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(24 * var(--px));
+  margin-bottom: calc(80 * var(--px));
+}
+
+.res-gallery-grid .full-span {
+  grid-column: 1 / -1;
+}
+
+.res-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(3 * var(--px));
+  background: rgba(206, 228, 159, 0.05);
+}
+
+.res-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.res-img-wrap:hover img {
+  transform: scale(1.03);
+}
+
+.res-quote-box {
+  margin: calc(96 * var(--px)) 0;
+  padding: calc(64 * var(--px)) calc(48 * var(--px));
+  border-left: 2px solid var(--green);
+  background: rgba(206, 228, 159, 0.02);
+}
+
+.res-quote-text {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-size: clamp(20px, calc(32 * var(--px)), 44px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.res-next-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--green-12);
+  padding-top: calc(48 * var(--px));
+  margin-top: calc(80 * var(--px));
+}
+
+.res-next-link {
+  display: flex;
+  align-items: baseline;
+  gap: calc(12 * var(--px));
+  text-decoration: none;
+  color: inherit;
+}
+
+.res-next-title {
+  font-family: 'PP Neue Montreal', sans-serif;
+  font-weight: 700;
+  font-size: calc(28 * var(--px));
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .r-item {
+    grid-template-columns: calc(40 * var(--px)) 1fr;
+    gap: calc(12 * var(--px));
+  }
+  .r-item-type, .r-item-meta, .r-item-action {
+    grid-column: 2;
+  }
+  .res-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}

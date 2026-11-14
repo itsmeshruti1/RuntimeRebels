@@ -1,0 +1,71 @@
+{
+  "probedAt": "2026-11-13T15:03:53.244Z",
+  "geofabrikExtracts": [
+    {
+      "zone": "Southern Zone",
+      "specFile": "southern-zone-261112.osm.pbf",
+      "url": "https://download.geofabrik.de/asia/india/southern-zone-latest.osm.pbf",
+      "regions": [
+        "Bengaluru",
+        "Chennai"
+      ],
+      "statusCode": 0,
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    },
+    {
+      "zone": "Western Zone",
+      "specFile": "western-zone-261112.osm.pbf",
+      "url": "https://download.geofabrik.de/asia/india/western-zone-latest.osm.pbf",
+      "regions": [
+        "Mumbai"
+      ],
+      "statusCode": 0,
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    },
+    {
+      "zone": "Northern Zone",
+      "specFile": "northern-zone-261112.osm.pbf",
+      "url": "https://download.geofabrik.de/asia/india/northern-zone-latest.osm.pbf",
+      "regions": [
+        "Delhi NCR"
+      ],
+      "statusCode": 0,
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    },
+    {
+      "zone": "North-Eastern Zone",
+      "specFile": "north-eastern-zone-261112.osm.pbf",
+      "url": "https://download.geofabrik.de/asia/india/north-eastern-zone-latest.osm.pbf",
+      "regions": [
+        "Guwahati"
+      ],
+      "statusCode": 0,
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    }
+  ],
+  "pincodeDataset": {
+    "url": "https://raw.githubusercontent.com/dropdevrahul/pincodes-india/main/pincode.csv",
+    "statusCode": 200,
+    "header": "\"CircleName\",\"RegionName\",\"DivisionName\",\"OfficeName\",\"Pincode\",\"OfficeType\",\"Delivery\",\"District\",\"StateName\",\"Latitude\",\"Longitude\"",
+    "matchedCityPinRecords": [
+      "\"Andhra Pradesh Circle\",\"Visakhapatnam Region\",\"Parvathipuram Division\",\"Amiti B.O\",\"535126\",\"BO\",\"Delivery\",\"VIZIANAGARAM\",\"ANDHRA PRADESH\",\"83.5601000\",\"18.5016000\"",
+      "\"Assam Circle\",\"DivReportingCircle\",\"Guwahati Division\",\"Bongra B.O\",\"781015\",\"BO\",\"Delivery\",\"KAMRUP METRO\",\"ASSAM\",\"26.1050000\",\"91.5921900\"",
+      "\"Assam Circle\",\"DivReportingCircle\",\"Guwahati Division\",\"Collegenagar B.O\",\"781031\",\"BO\",\"Delivery\",\"KAMRUP\",\"ASSAM\",\"26.1882000\",\"91.6785000\"",
+      "\"Chattisgarh Circle\",\"DivReportingCircle\",\"Raigarh Division\",\"Raimer BO\",\"496118\",\"BO\",\"Delivery\",\"RAIGARH\",\"CHHATTISGARH\",\"22.5600662\",\"83.3522229\"",
+      "\"Delhi Circle\",\"DivReportingCircle\",\"New Delhi South West Division\",\"Mahipalpur BO\",\"110037\",\"BO\",\"Non Delivery\",\"NEW DELHI\",\"DELHI\",\"28.5400000\",\"77.1200000\"",
+      "\"Delhi Circle\",\"DivReportingCircle\",\"New Delhi South Division\",\"Tehkhand BO\",\"110020\",\"BO\",\"Non Delivery\",\"SOUTH\",\"DELHI\",\"28.5200000\",\"77.2900000\"",
+      "\"Tamilnadu Circle\",\"Chennai City Region\",\"Tambaram Division\",\"Athipattu BO\",\"600058\",\"BO\",\"Non Delivery\",\"CHENNAI\",\"TAMIL NADU\",\"13.0850000\",\"80.1420000\"",
+      "\"Assam Circle\",\"DivReportingCircle\",\"Guwahati Division\",\"Uzanbazar S.O\",\"781001\",\"PO\",\"Non Delivery\",\"KAMRUP METRO\",\"ASSAM\",\"26.1924300\",\"91.7553700\"",
+      "\"Karnataka Circle\",\"Bengaluru HQ Region\",\"BANGALORE GPO DIVISION\",\"Bengaluru G.P.O.\",\"560001\",\"HO\",\"Delivery\",\"BENGALURU URBAN\",\"KARNATAKA\",\"12.9715990\",\"77.5945630\"",
+      "\"Maharashtra Circle\",\"Mumbai Region\",\"Mumbai GPO Division\",\"Mumbai GPO\",\"400001\",\"HO\",\"Delivery\",\"MUMBAI\",\"MAHARASHTRA\",\"18.9391667\",\"72.8375556\"",
+      "\"Delhi Circle\",\"DivReportingCircle\",\"New Delhi Central Division\",\"Sansad Marg HO\",\"110001\",\"HO\",\"Non Delivery\",\"NEW DELHI\",\"DELHI\",\"28.6225833\",\"77.2127222\"",
+      "\"West Bengal Circle\",\"South Bengal Region\",\"Asansol Division\",\"Kuldiha BO\",\"713212\",\"BO\",\"Delivery\",\"PASCHIM BARDHAMAN\",\"WEST BENGAL\",\"23.5466190\",\"87.4000370\"",
+      "\"Tamilnadu Circle\",\"Chennai City Region\",\"Chennai GPO Division\",\"Chennai G.P.O.\",\"600001\",\"HO\",\"Delivery\",\"CHENNAI\",\"TAMIL NADU\",\"13.0929722\",\"80.2915000\"",
+      "\"Uttar Pradesh Circle\",\"Lucknow  HQ Region\",\"Ghaziabad Division\",\"Noida HO\",\"201301\",\"HO\",\"Delivery\",\"GAUTAM BUDDHA NAGAR\",\"UTTAR PRADESH\",\"26.5487200\",\"78.5489700\"",
+      "\"Maharashtra Circle\",\"Navi Mumbai Region\",\"Navi Mumbai Division\",\"Turbhe Market S.O\",\"400703\",\"PO\",\"Non Delivery\",\"THANE\",\"MAHARASHTRA\",\"19.0759167\",\"73.0068056\"",
+      "\"Tamilnadu Circle\",\"Chennai City Region\",\"Chennai City South Division\",\"Sholinganallur S.O\",\"600119\",\"PO\",\"Delivery\",\"CHENNAI\",\"TAMIL NADU\",\"12.8925556\",\"80.2278611\"",
+      "\"Karnataka Circle\",\"Bengaluru HQ Region\",\"Bengaluru West Division\",\"Peenya I Stage S.O\",\"560058\",\"PO\",\"Non Delivery\",\"BENGALURU URBAN\",\"KARNATAKA\",\"13.0345570\",\"77.5262010\"",
+      "\"Maharashtra Circle\",\"Mumbai Region\",\"Mumbai City North Division\",\"Chakala Midc S.O\",\"400093\",\"PO\",\"Delivery\",\"MUMBAI SUBURBAN\",\"MAHARASHTRA\",\"19.1211389\",\"72.8712222\""
+    ]
+  }
+}
