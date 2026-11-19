@@ -1,9 +1,9 @@
-# ReverseResilia
+# Project Name: ReverseResilia
 
 **Goal-Driven Supply Chain Recovery**  
 *Recover to a target. And prove it holds.*
 
-**Team Runtime Rebels · Colossus 3.0 · Open Innovation**
+
 
 ## Overview
 
